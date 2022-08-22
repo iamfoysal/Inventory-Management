@@ -6,9 +6,3 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ('id', 'title', 'price', 'stock', 'category', 'description', 'image')
 
-
-    # Delete the old image from the folder when the product is updated   
-    # def save(self, *args, **kwargs):
-    #     if self.instance.image:
-    #         self.instance.image.delete()
-    #     return super().save(*args, **kwargs)
