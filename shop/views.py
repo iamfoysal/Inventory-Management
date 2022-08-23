@@ -4,10 +4,10 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Category, Product
-from .forms import ProductAddForm
-from .serializers import ProductSerializer
 
+from .forms import ProductAddForm
+from .models import Category, Product
+from .serializers import ProductSerializer
 
 
 def index(request):
@@ -37,20 +37,22 @@ def add_product(request):
 	return render (request,'shop/add-product.html',context)
 
 @api_view(['GET'])
-def productlist(request):
+def productlist_api(request):
 	products = Product.objects.all().order_by('-created_at')
 	product_serializer = ProductSerializer(products, many=True)
+	
 	return Response(product_serializer.data)
 
+
 @api_view(['POST'])
-def addproduct(request):
+def add_product_api(request):
 	products = ProductSerializer(data=request.data)
 	if products.is_valid():
 		products.save()
 	return Response(products.data)
 
 @api_view(['POST'])
-def update(request, pk):
+def update_product_api(request, pk):
 	product = Product.objects.get(id=pk)
 	product_serializer = ProductSerializer(instance=product, data=request.data)
 	if product_serializer.is_valid():
@@ -58,14 +60,14 @@ def update(request, pk):
 	return Response(product_serializer.data)
 
 @api_view(['GET'])
-def detail(request, pk):
+def detail_product_api(request, pk):
 	product = Product.objects.get(id=pk)
 	product_serializer = ProductSerializer(product, many=False)
 	return Response(product_serializer.data)
 
 
 @api_view(['DELETE'])
-def delete(request, pk):
+def delete_product_api(request, pk):
 	product = Product.objects.get(id=pk)
 	product.delete()
 	return Response("Product deleted")
