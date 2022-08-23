@@ -87,22 +87,15 @@
   <div class="app-content">
     <div class="app-content-header">
       <h1 class="app-content-headerText">Products</h1>
-
-      <a href="{% url 'add-product'%}" class="app-content-headerButton"
-        >Add Product</a
-      >
+      <a href="{% url 'add-product' %}" class="app-content-headerButton" >Add Product</a>
     </div>
 
     <div class="app-content-actions">
-      <form method="POST">
-        {% csrf_token %}
-      <input class="search-bar" placeholder="search...." name="search-product" type="text" />
-      </form>
       <div class="app-content-actions-wrapper">
         <div class="filter-button-wrapper">
           <button class="action-button filter jsFilter">
-            <span>Filter</span>
-              <svg
+            <span>Filter</span
+            ><svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
@@ -186,7 +179,7 @@
         </button>
       </div>
     </div>
-
+<!-- search sections -->
     <div class="products-area-wrapper tableView">
       <div class="products-header">
         <div class="product-cell image">
@@ -286,7 +279,7 @@
       </div>
 
 
-      
+
       <div class="product-wrapper">
         <div class="products-row">
           <button class="cell-more-button">
@@ -307,25 +300,25 @@
               <circle cx="12" cy="19" r="1" />
             </svg>
           </button>
-          <div class="product-cell image">
-            <img
-              src=""
-              alt="product"
-            />
+          <!-- search reslts -->
+          {% for result in results %}
+          <div class="">
+            <img src="{{ result.image.url }}" alt="product"/>
             <span></span>
           </div>
-          <div class="product-cell category">
-            <span class="cell-label">Category:</span>
+          <div class="">
+            <span class="">{{ result.category }}</span>
           </div>
   
-          <div class="product-cell stock">
-            <span class="cell-label">Stock:</span>
+          <div class=" ">
+            <span class="">{{ result.stock }}</span>
           </div>
   
-          <div class="product-cell price">
-            <span class="cell-label">Price:</span>$
+          <div class=" ">
+            <span class="">${{ result.price }}</span>
           </div>
-  
+          {% endfor %}
+          <!-- search sections end -->
           <div class="product-cell update-cell">
             <span class="cell-label">Update</span>
             <!-- <span class="update active"

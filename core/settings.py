@@ -154,3 +154,5 @@ DEFAULT_FROM_EMAIL  = 'inventory management <no-reply@inventory.localhost>'
 # DEFAULT_FROM_EMAIL  = 'inventory management <no-reply@inventory.localhost>'
 
 
+LOGIN = "signin/"
+LOGOUT = "signout/"

@@ -74,7 +74,7 @@ productContainer.innerHTML = ''
           <span>${ product[i].title }</span>
         </div>
         <div class="product-cell category">
-          <span class="cell-label">Category:</span>${ product[i].category}
+          <span class="cell-label">Category:</span>${ product[i].category_name}
         </div>
 
         <div class="product-cell stock">

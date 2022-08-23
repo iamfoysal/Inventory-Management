@@ -7,27 +7,24 @@ from rest_framework.response import Response
 from .models import Category, Product
 from .forms import ProductAddForm
 from .serializers import ProductSerializer
-
-
-
-def index(request):
-
-	return HttpResponse("Inventory Application initialization.")
+from shop import serializers
 	
-def home(request):
+@login_required(login_url='/signin')
+def index(request):
     product = Product.objects.all()
-    # if request.method == 'POST':
-    #     search = request.POST.get('search-product')
-    #     results = Product.objects.filter(Q(title__icontains=search) | Q(category__icontains=search))
-    #     context =  { 
-	# 		 'results': results,
-	# 		 'search': search
-	# 	}
-    #     return render(request, 'shop/search.html', context)
+    if request.method == 'POST':
+        search = request.POST.get('search-product')
+        results = Product.objects.filter(Q(title__icontains=search))
+        context =  { 
+			 'results': results,
+			 'search': search
+		}
+        return render(request, 'shop/search.html', context)
     context = {'products': product }
     return render (request, "shop/index.html", context)
 
 
+@login_required(login_url='/signin')
 def add_product(request):
 	form = ProductAddForm()
 	context = {
@@ -39,8 +36,29 @@ def add_product(request):
 @api_view(['GET'])
 def productlist(request):
 	products = Product.objects.all().order_by('-created_at')
-	product_serializer = ProductSerializer(products, many=True)
+	print(products)
+	# category_serializer = ProductSerializer(products, many=True)
+	product_serializer = serializers.ProductSerializer(products, many=True)
+
+	print(product_serializer.data)
 	return Response(product_serializer.data)
+
+	# product_data=[]
+	# products=Product.objects.all() 
+	# for product in products:
+	# 	product_cat=Category.objects.all().filter(id = product.category)
+	# 	product_data.append(product)
+	# 	product_data.append(product_cat)
+	# 	print(product_cat)
+
+	# print(product_data)
+	# return JsonResponse(product_data, safe=False)
+
+
+	
+
+
+
 
 @api_view(['POST'])
 def addproduct(request):

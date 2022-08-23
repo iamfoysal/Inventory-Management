@@ -10,7 +10,7 @@ from .models import User, Users
 def create_user(sender, instance, created, **kwargs):
     if created and instance.email:
         Users.objects.create(user=instance)
-
+        
         message = render_to_string('user/accountmail.html', {'name': instance.get_full_name()})
         send_mail(
             'Welcome to join inventory management System',

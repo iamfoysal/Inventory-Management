@@ -14,6 +14,5 @@ urlpatterns = [
     path('api/delete/<str:pk>/', views.delete, name='product-delete'),
 
     #general view
-    path('home/', views.home, name='home'),
     path('add-product/', views.add_product, name='add-product')
 ]
