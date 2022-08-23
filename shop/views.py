@@ -1,16 +1,13 @@
 from django.contrib.auth.decorators import login_required
-<<<<<<< HEAD
-from django.http import HttpResponse
-=======
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
->>>>>>> d6484a4f71962e19af781d88b6799687525155e6
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
 from .models import Category, Product
+from .forms import ProductAddForm
 from .serializers import ProductSerializer
+
 
 
 def index(request):
@@ -27,14 +24,17 @@ def home(request):
 	# 		 'search': search
 	# 	}
     #     return render(request, 'shop/search.html', context)
-  
     context = {'products': product }
     return render (request, "shop/index.html", context)
 
 
 def add_product(request):
-	
+	form = ProductAddForm()
+	context = {
+		'form' : form
+	}
 
+	return render (request,'shop/add-product.html',context)
 
 @api_view(['GET'])
 def productlist(request):
@@ -70,9 +70,3 @@ def delete(request, pk):
 	product.delete()
 	return Response("Product deleted")
 
-
-
-<<<<<<< HEAD
-=======
-	return Response(serializer.data)
->>>>>>> d6484a4f71962e19af781d88b6799687525155e6

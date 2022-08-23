@@ -97,3 +97,15 @@ body {
     margin: 0 10px;
   }
 }
+
+
+
+
+/* ADD PRODUCT  */  
+
+
+.wrapper .content header .add-product-content {
+    color: #fff;
+    margin-top: 0;
+    font-size: 21px;
+}
