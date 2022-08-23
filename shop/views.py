@@ -1,31 +1,39 @@
-from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
+<<<<<<< HEAD
 from django.http import HttpResponse
+=======
+from django.db.models import Q
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
+>>>>>>> d6484a4f71962e19af781d88b6799687525155e6
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import ProductSerializer
-from django.db.models import Q
-from .models import Product, Category
 
+from .models import Category, Product
+from .serializers import ProductSerializer
 
 
 def index(request):
 
 	return HttpResponse("Inventory Application initialization.")
 	
-# def index(request):
-#     product = Product.objects.all()
-#     if request.method == 'POST':
-#         search = request.POST.get('search-product')
-#         results = Product.objects.filter(Q(title__icontains=search) | Q(category__icontains=search))
-#         context =  { 
-# 			 'results': results,
-# 			 'search': search
-# 			 }
-#         return render(request, 'shop/search.html', context)
+def home(request):
+    product = Product.objects.all()
+    # if request.method == 'POST':
+    #     search = request.POST.get('search-product')
+    #     results = Product.objects.filter(Q(title__icontains=search) | Q(category__icontains=search))
+    #     context =  { 
+	# 		 'results': results,
+	# 		 'search': search
+	# 	}
+    #     return render(request, 'shop/search.html', context)
   
-#     context = {'product': product }
-#     return render (request, "shop/index.html", context)
+    context = {'products': product }
+    return render (request, "shop/index.html", context)
+
+
+def add_product(request):
+	
 
 
 @api_view(['GET'])
@@ -64,3 +72,7 @@ def delete(request, pk):
 
 
 
+<<<<<<< HEAD
+=======
+	return Response(serializer.data)
+>>>>>>> d6484a4f71962e19af781d88b6799687525155e6
