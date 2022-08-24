@@ -53,13 +53,27 @@ body {
   width: 100%;
   max-width: 310px;
 }
-.wrapper .content .login-form .input-group input {
+.wrapper .content .login-form .input-group input{
+  padding: 8px;
+  font-size: 12px;
+  border: 1px solid #262936;
+  background-color: #262936;
+  color: rgb(207, 197, 197);
+  border-radius: 50px;
+}
+.wrapper .content .login-form .input-group textarea{
   padding: 15px;
   font-size: 13px;
   border: 1px solid #262936;
   background-color: #262936;
   color: rgb(207, 197, 197);
-  border-radius: 50px;
+}
+.wrapper .content .login-form .input-group select{
+  padding: 8px;
+  font-size: 12px;
+  border: 1px solid #262936;
+  background-color: #262936;
+  color: rgb(207, 197, 197);
 }
 .wrapper .content .login-form .input-group input:focus {
   color: #fff;
@@ -69,7 +83,7 @@ body {
   color: #999;
   font-size: 12px;
   margin-bottom: 3px;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 .wrapper .content .login-form .input-group button {
   background-color: #3f5bd8;
@@ -97,8 +111,6 @@ body {
     margin: 0 10px;
   }
 }
-
-
 
 
 /* ADD PRODUCT  */  

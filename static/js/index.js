@@ -1,7 +1,14 @@
-
+//  Message section
+const message = document.querySelector('.message');
+if (message) {
+   setTimeout(() => {
+     message.classList.add("message-hide");
+   }, 5000);
+}
 
 
 //index page styling control
+
 document.querySelector(".jsFilter").addEventListener("click", function () {
     document.querySelector(".filter-menu").classList.toggle("active");
   });
@@ -23,5 +30,3 @@ document.querySelector(".jsFilter").addEventListener("click", function () {
   });
   
   
-
-

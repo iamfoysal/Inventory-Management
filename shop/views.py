@@ -1,6 +1,6 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -10,38 +10,86 @@ from .models import Category, Product
 from .serializers import ProductSerializer
 
 
+@login_required(login_url='/signin')
 def index(request):
-
-	return HttpResponse("Inventory Application initialization.")
 	
-def home(request):
     product = Product.objects.all()
-    # if request.method == 'POST':
-    #     search = request.POST.get('search-product')
-    #     results = Product.objects.filter(Q(title__icontains=search) | Q(category__icontains=search))
-    #     context =  { 
-	# 		 'results': results,
-	# 		 'search': search
-	# 	}
-    #     return render(request, 'shop/search.html', context)
-    context = {'products': product }
+	
+    if request.method == 'POST':
+        search = request.POST.get('search-product')
+        results = Product.objects.filter(Q(title__icontains=search)|Q(price__icontains=search)|Q(category__name__icontains=search))
+		
+        context =  { 
+			'results': results,
+			'search': search
+		}
+        return render(request, 'shop/search.html', context)
+	
+    context = {
+		'products': product 
+	}
+	
     return render (request, "shop/index.html", context)
 
 
+@login_required(login_url='/signin')
 def add_product(request):
-	form = ProductAddForm()
-	context = {
-		'form' : form
-	}
+	
+	if request.method == 'POST':
+		form = ProductAddForm(request.POST, request.FILES)
+		if form.is_valid():
+			form.save()
+			#print(form)
+			messages.success(request, 'Product added successfully')
+			return redirect('index')
+	else:
+		form = ProductAddForm()
+	context = {'form': form}
 
-	return render (request,'shop/add-product.html',context)
+	return render(request, 'shop/add-product.html', context)
+
+
+
+@login_required(login_url='/signin')
+def edit_product(request,pk):
+	product = get_object_or_404(Product,pk=pk)
+	print("product is ======", product)
+	form = ProductAddForm(instance = product)
+	if request.method == 'POST':
+		form = ProductAddForm(request.POST, request.FILES,instance = product)
+		if form.is_valid():
+			form.save()
+			#print(form)
+			messages.success(request, 'Product Updated Successfully')
+			return redirect('index')
+	else:
+		form = ProductAddForm(instance=product)
+	context = {'form': form}
+
+	return render(request, 'shop/edit-product.html', context)
+
+
+
+
+@login_required(login_url='/signin')
+def delete_product(request, pk):
+    product = get_object_or_404(Product, id=pk)
+    if request.method == 'POST':
+        product.delete()
+        return redirect('/')
+
+    context ={'product': product}
+    return render (request, 'shop/delete.html', context)
+
 
 @api_view(['GET'])
 def productlist_api(request):
 	products = Product.objects.all().order_by('-created_at')
+	# print(products)
 	product_serializer = ProductSerializer(products, many=True)
-	
+	# print(product_serializer.data)
 	return Response(product_serializer.data)
+
 
 
 @api_view(['POST'])
@@ -51,6 +99,7 @@ def add_product_api(request):
 		products.save()
 	return Response(products.data)
 
+
 @api_view(['POST'])
 def update_product_api(request, pk):
 	product = Product.objects.get(id=pk)
@@ -59,11 +108,13 @@ def update_product_api(request, pk):
 		product_serializer.save()
 	return Response(product_serializer.data)
 
+
 @api_view(['GET'])
 def detail_product_api(request, pk):
 	product = Product.objects.get(id=pk)
 	product_serializer = ProductSerializer(product, many=False)
 	return Response(product_serializer.data)
+
 
 
 @api_view(['DELETE'])

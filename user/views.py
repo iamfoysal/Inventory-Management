@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterFrom, UserForm 
 from django.contrib import messages
 
+
 def signin(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -30,7 +31,21 @@ def register(request):
             return redirect("signin")
     return render(request, 'user/register.html',{'form':form} )
 
-
+@login_required
+def profile_update(request):
+    # profile = request.user.profile
+    # form = UserForm(instance=profile)
+    if request.method == 'POST':
+        form = UserForm(data=request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            print(form)
+            messages.success(request, 'Profile updated successfully.')
+    else:
+        form = UserForm(instance=request.user)
+                
+    context = {'form':form}
+    return render(request, 'user/update-profile.html', context)
 
 def signout(request):
     logout(request)

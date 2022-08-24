@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import Users
+from .models import Profile
 
 class UserRegisterFrom(UserCreationForm):
     class Meta:
@@ -20,8 +20,8 @@ class UserRegisterFrom(UserCreationForm):
 
 class UserForm(ModelForm):
     class Meta:
-        model = Users
-        fields = ['image']
+        model = Profile
+        fields = [ 'name', 'image']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

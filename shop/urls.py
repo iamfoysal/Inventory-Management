@@ -2,7 +2,7 @@ from django.urls import path
 
 from . import views
 
-# Shpo Routing
+# Inventory Routing
 
 urlpatterns = [
  
@@ -15,6 +15,7 @@ urlpatterns = [
     path('api/delete/<str:pk>/', views.delete_product_api, name='product-delete'),
 
     #general view
-    path('home/', views.home, name='home'),
-    path('add-product/', views.add_product, name='add-product')
+    path('add-product/', views.add_product, name='add-product'),
+    path('edit-product/<str:pk>/', views.edit_product, name='edit-product'),
+    path('delete-product/<str:pk>/', views.delete_product, name='delete-product')
 ]

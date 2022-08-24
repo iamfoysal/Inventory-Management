@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block title %}Add New Product {% endblock %}
 {% block content %}
     <section class="wrapper">
@@ -8,7 +7,7 @@
             <p class="add-product-content" >Add Product</p>
           </header>
           <section id="product-add-wrapper">
-            <form method="POST" class="login-form" id="product-add-form">
+            <form method="POST" class="login-form" id="product-add-form" enctype="multipart/form-data">
               {% csrf_token %}
               {% for field in form %}
               <div class="input-group">
