@@ -1,9 +1,10 @@
-from django.core.mail import send_mail
-from django.template.loader import render_to_string, get_template
-from django.db.models.signals import post_save
 from django.conf import settings
+from django.core.mail import send_mail
+from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import User, Profile
+from django.template.loader import get_template, render_to_string
+
+from .models import Profile, User
 
 
 @receiver(post_save, sender=User)
@@ -21,4 +22,7 @@ def create_user(sender, instance, created, **kwargs):
         )
 
 
+@receiver(post_save,sender=User)
+def save_profile(sender, instance, **kwargs):
+    instance.profile.save()
        

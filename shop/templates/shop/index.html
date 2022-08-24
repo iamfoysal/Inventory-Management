@@ -54,7 +54,7 @@
       </li>
       <li class="sidebar-list-item">
         <div class="filter-button-wrapper">
-          <!-- <button class="action-button filter jsFilter">
+          <button class="action-button filter jsFilter">
             <span>Product Category</span>
               <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -72,13 +72,17 @@
                 points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"
               />
             </svg>
-          </button> -->
+          </button>
           <div class="filter-menu">
             <label>Select Category</label>
             <select>
               <option>All Categories</option>
-              {% for product in products %}
-                <option>{{ product.category.name }}</option>
+              {% for category in categories %}
+              <a href=" {% url 'category-product' category.id %}">
+                <option>
+                  {{ category.name }}
+                </option>
+              </a>
               {% endfor %}
               
               
@@ -95,7 +99,9 @@
           alt="Account"
         />
       </div>
-      <div class="account-info-name">Mr. Scorpion</div>
+      <div class="account-info-name">
+        <a href="{% url 'profile' %}" style="text-decoration: none; color:aqua">{{ request.user.username }}</a>
+      </div>
       <a style="color: #fff; text-decoration: none; " href="{% url 'signout'%}">Logout</a>
     </div>
   </div>

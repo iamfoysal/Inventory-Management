@@ -76,11 +76,16 @@
           <div class="filter-menu">
             <label>Select Category</label>
             <select>
-              <option>All Categories</option>
-              <option>Furniture</option>
-              <option>Mobile</option>
-              <option>Laptop</option>
-              <option>Mouse</option>
+              <!-- <option>All Categories</option> -->
+              {% for category in categories %}
+              <a href=" {% url 'category-product' category.id %}">
+                
+                  {{ category.name }}
+              
+              </a>
+              {% endfor %}
+              
+              
             </select>
             
           </div>
