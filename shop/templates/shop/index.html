@@ -60,24 +60,7 @@
         />
       </div>
       <div class="account-info-name">Mr. Scorpion</div>
-      <button class="account-info-more">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="feather feather-more-horizontal"
-        >
-          <circle cx="12" cy="12" r="1" />
-          <circle cx="19" cy="12" r="1" />
-          <circle cx="5" cy="12" r="1" />
-        </svg>
-      </button>
+      <a style="color: #fff; text-decoration: none; " href="{% url 'signout'%}">Logout</a>
     </div>
   </div>
 
@@ -335,7 +318,7 @@
           <div class="product-cell">
             <span class="cell-label">Delete:</span>
             <!-- <span class="delete"><i class="fa-solid fa-trash"></i></span> -->
-            <a href="{% url 'delete-product'%}" class="delete"><i class="fa-solid fa-trash"></i></a>
+            <a href="#" class="delete"><i class="fa-solid fa-trash"></i></a>
           </div>
         </div>
       </div>

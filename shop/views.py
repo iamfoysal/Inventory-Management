@@ -40,7 +40,7 @@ def add_product(request):
 
 	return render(request, 'shop/add-product.html', context)
 
-'''
+
 @login_required(login_url='/signin')
 def delete_product(request, pk):
     product = get_object_or_404(Product, id=pk)
@@ -51,7 +51,7 @@ def delete_product(request, pk):
     context ={'product': product}
     return render (request, 'shop/delete.html', context)
 
-'''
+
 @api_view(['GET'])
 def productlist_api(request):
 	products = Product.objects.all().order_by('-created_at')
