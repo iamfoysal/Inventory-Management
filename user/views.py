@@ -47,8 +47,6 @@ def profile_update(request):
     context = {'form':form}
     return render(request, 'user/update-profile.html', context)
 
-
-
 def signout(request):
     logout(request)
     messages.success(request, "logout Successfully Complete.")
