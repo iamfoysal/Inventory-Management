@@ -4,7 +4,6 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
 from .forms import ProductAddForm
 from .models import Category, Product
 from .serializers import ProductSerializer
@@ -12,13 +11,10 @@ from .serializers import ProductSerializer
 
 @login_required(login_url='/signin')
 def index(request):
-	
     product = Product.objects.all()
-	
     if request.method == 'POST':
         search = request.POST.get('search-product')
         results = Product.objects.filter(Q(title__icontains=search)|Q(price__icontains=search)|Q(category__name__icontains=search))
-		
         context =  { 
 			'results': results,
 			'search': search
@@ -26,7 +22,8 @@ def index(request):
         return render(request, 'shop/search.html', context)
 	
     context = {
-		'products': product 
+		'products': product ,
+		
 	}
 	
     return render (request, "shop/index.html", context)
