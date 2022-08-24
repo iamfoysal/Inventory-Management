@@ -84,14 +84,14 @@ function buildProduct(){
         <!-- <span class="update active"
             ><i class="fa-solid fa-pen-to-square"></i
         ></span> -->
-        <a href="#" class="update active"
+        <a href="/edit-product/${product[i].id}/" class="update active"
             ><i class="fa-solid fa-pen-to-square"></i
         ></a>
         </div>
         <div class="product-cell">
         <span class="cell-label">Delete:</span>
         <!-- <span class="delete"><i class="fa-solid fa-trash"></i></span> -->
-        <a href="#" class="delete"><i class="fa-solid fa-trash"></i></a>
+        <a href="/delete-product/${product[i].id}" class="delete"><i class="fa-solid fa-trash"></i></a>
         </div>
     </div>
         `

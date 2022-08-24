@@ -1,13 +1,13 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import ProductSerializer
+
 from .forms import ProductAddForm
 from .models import Category, Product
-from django.contrib import messages
-
+from .serializers import ProductSerializer
 
 
 @login_required(login_url='/signin')
@@ -31,7 +31,7 @@ def add_product(request):
 		form = ProductAddForm(request.POST, request.FILES)
 		if form.is_valid():
 			form.save()
-			print(form)
+			#print(form)
 			messages.success(request, 'Product added successfully')
 			return redirect('index')
 	else:
@@ -39,6 +39,28 @@ def add_product(request):
 	context = {'form': form}
 
 	return render(request, 'shop/add-product.html', context)
+
+
+
+@login_required(login_url='/signin')
+def edit_product(request,pk):
+	product = get_object_or_404(Product,pk=pk)
+	print("product is ======", product)
+	form = ProductAddForm(instance = product)
+	if request.method == 'POST':
+		form = ProductAddForm(request.POST, request.FILES,instance = product)
+		if form.is_valid():
+			form.save()
+			#print(form)
+			messages.success(request, 'Product Updated Successfully')
+			return redirect('index')
+	else:
+		form = ProductAddForm(instance=product)
+	context = {'form': form}
+
+	return render(request, 'shop/edit-product.html', context)
+
+
 
 
 @login_required(login_url='/signin')
