@@ -2,7 +2,7 @@ from django.urls import path
 
 from . import views
 
-# Shpo Routing
+# Inventory Routing
 
 urlpatterns = [
  
