@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Product Delete {% endblock %}
+{% block content %}
+    <section class="wrapper">
+        <div class="content">
+          <header>
+            <p class="add-product-content" >Add Product</p>
+          </header>
+          <h2 class="display-4 text-center font-weidth-bold">Empoloyee Informations Remove</h2>
+          <p class="lead  text-center">Are you sure to delete?!</p>
+          <br>
+          <hr class="my-4">
+          <h4>Item : {{ product.title }}</h4>
+          <h4>category: {{ product.category }}</h4>
+          <form class="mt-5 mb-5" action="" method="POST">
+              {% csrf_token %}
+              <a class="btn btn-success float-right d-inline mr-5"
+                  href="{% url 'index' %}">Cancel</a>
+              <button type="submit" class="btn btn-danger float-right mr-5 ">Confirm Delete</button>
+          </form>
+        </div>
+      </section>
+{% endblock %}

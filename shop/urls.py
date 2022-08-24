@@ -1,4 +1,5 @@
 from django.urls import path
+
 from . import views
 
 # Shpo Routing
@@ -7,12 +8,13 @@ urlpatterns = [
  
     
     path('', views.index, name='index'),
-    path('api/', views.productlist, name='product-list'),
-    path('api/add/', views.addproduct, name='product-add'),
-    path('api/detail/<str:pk>/', views.detail, name='product-detail'),
-    path('api/update/<str:pk>/', views.update, name='product-update'),
-    path('api/delete/<str:pk>/', views.delete, name='product-delete'),
+    path('api/', views.productlist_api, name='product-list'),
+    path('api/add/', views.add_product_api, name='product-add'),
+    path('api/detail/<str:pk>/', views.detail_product_api, name='product-detail'),
+    path('api/update/<str:pk>/', views.update_product_api, name='product-update'),
+    path('api/delete/<str:pk>/', views.delete_product_api, name='product-delete'),
 
     #general view
-    path('add-product/', views.add_product, name='add-product')
+    path('add-product/', views.add_product, name='add-product'),
+    path('delete-product/<str:pk>/', views.delete_product, name='delete-product')
 ]
