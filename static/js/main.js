@@ -107,15 +107,15 @@ buildProduct()
 
 
 //add product api 
-let productForm = document.getElementById('product-add-form')
+let productForm = document.getElementById('product-add-wrapper')
 
 //console.log("=====v ssfs======")
 
 productForm.addEventListener('submit', function(e){
-    let name = document.getElementById('id_title')
+    //let name = document.getElementById('id_title')
     e.preventDefault()
-    console.log(name.value)
-    //console.log("in product form=======")
+    //console.log(name.value)
+    console.log("in product form submitted=======")
     
     // let url = 'http://127.0.0.1:8000/api/add/'
 
@@ -128,4 +128,6 @@ productForm.addEventListener('submit', function(e){
     //     body: JSON.stringify({'title' : name})
     // })
 })
+
+console.log("in product form submitted=======")
 
