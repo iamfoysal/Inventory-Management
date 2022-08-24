@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
 
 <div class="app-container">
@@ -51,6 +52,41 @@
           <span>Products</span>
         </a>
       </li>
+
+      <li class="sidebar-list-item">
+        <div class="filter-button-wrapper">
+          <button class="action-button filter jsFilter">
+            <span>Product Category</span>
+              <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-filter"
+            >
+              <polygon
+                points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"
+              />
+            </svg>
+          </button>
+          <div class="filter-menu">
+            <label>Select Category</label>
+            <select>
+              <option>All Categories</option>
+              <option>Furniture</option>
+              <option>Mobile</option>
+              <option>Laptop</option>
+              <option>Mouse</option>
+            </select>
+            
+          </div>
+        </div>
+      </li>
     </ul>
     <div class="account-info">
       <div class="account-info-picture">
@@ -77,53 +113,10 @@
       <form method="POST">
         {% csrf_token %}
       <input class="search-bar" placeholder="search...." name="search-product" type="text" />
+      <button type="submit">Search</button>
       </form>
       <div class="app-content-actions-wrapper">
-        <div class="filter-button-wrapper">
-          <button class="action-button filter jsFilter">
-            <span>Filter</span>
-              <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-filter"
-            >
-              <polygon
-                points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"
-              />
-            </svg>
-          </button>
-          <div class="filter-menu">
-            <label>Category</label>
-            <select>
-              <option>All Categories</option>
-              <option>Furniture</option>
-              <option>Mobile</option>
-              <option>Laptop</option>
-              <option>Mouse</option>
-            </select>
-            <!-- <label>Status</label>
-            <select>
-              <option>All Status</option>
-              <option>Active</option>
-              <option>Disabled</option>
-            </select> -->
-            <div class="filter-menu-buttons">
-              <button class="filter-button reset" type="reset">
-                Reset
-              </button>
-              <button class="filter-button apply" type="button">
-                Apply
-              </button>
-            </div>
-          </div>
-        </div>
+        
         <button class="action-button list active" title="List View">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -328,6 +321,9 @@
     </div>
   </div>
 </div>
+<script src="{% static 'js/main.js' %}"></script>
 {% endblock %}
+
+ 
 
 

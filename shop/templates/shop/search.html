@@ -1,7 +1,5 @@
 {% extends "base.html" %}
-
-
-
+{% load static %}
 {% block content %}
 
 <div class="app-container">
@@ -51,9 +49,44 @@
             <line x1="3" y1="6" x2="21" y2="6" />
             <path d="M16 10a4 4 0 0 1-8 0" />
           </svg>
-          <span>Products</span>
+          <span>Search Results</span>
         </a>
       </li>
+      <li class="sidebar-list-item">
+        <div class="filter-button-wrapper">
+          <button class="action-button filter jsFilter">
+            <span>Product Category</span>
+              <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-filter"
+            >
+              <polygon
+                points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"
+              />
+            </svg>
+          </button>
+          <div class="filter-menu">
+            <label>Select Category</label>
+            <select>
+              <option>All Categories</option>
+              <option>Furniture</option>
+              <option>Mobile</option>
+              <option>Laptop</option>
+              <option>Mouse</option>
+            </select>
+            
+          </div>
+        </div>
+      </li>
+
     </ul>
     <div class="account-info">
       <div class="account-info-picture">
@@ -63,39 +96,30 @@
         />
       </div>
       <div class="account-info-name">Mr. Scorpion</div>
-      <button class="account-info-more">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="feather feather-more-horizontal"
-        >
-          <circle cx="12" cy="12" r="1" />
-          <circle cx="19" cy="12" r="1" />
-          <circle cx="5" cy="12" r="1" />
-        </svg>
-      </button>
+      <a style="color: #fff; text-decoration: none; " href="{% url 'signout'%}">Logout</a>
     </div>
   </div>
 
   <div class="app-content">
     <div class="app-content-header">
       <h1 class="app-content-headerText">Products</h1>
-      <a href="{% url 'add-product' %}" class="app-content-headerButton" >Add Product</a>
+
+      <a href="{% url 'add-product'%}" class="app-content-headerButton"
+        >Add Product</a
+      >
     </div>
 
     <div class="app-content-actions">
+      <form method="POST">
+        {% csrf_token %}
+      <input class="search-bar" placeholder="search...." name="search-product" type="text" />
+      <button type="submit">Search</button>
+      </form>
       <div class="app-content-actions-wrapper">
         <div class="filter-button-wrapper">
           <button class="action-button filter jsFilter">
-            <span>Filter</span
-            ><svg
+            <span>Filter</span>
+              <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
@@ -179,7 +203,7 @@
         </button>
       </div>
     </div>
-<!-- search sections -->
+
     <div class="products-area-wrapper tableView">
       <div class="products-header">
         <div class="product-cell image">
@@ -278,63 +302,76 @@
         </div>
       </div>
 
-
-
-      <div class="product-wrapper">
-        <div class="products-row">
-          <button class="cell-more-button">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-more-vertical"
-            >
-              <circle cx="12" cy="12" r="1" />
-              <circle cx="12" cy="5" r="1" />
-              <circle cx="12" cy="19" r="1" />
-            </svg>
-          </button>
-          <!-- search reslts -->
-          {% for result in results %}
-          <div class="">
-            <img src="{{ result.image.url }}" alt="product"/>
-            <span></span>
+      {% if results %}
+        {% for result in results %}
+          <div class="product-wrapper">
+            <div class="products-row">
+              <button class="cell-more-button">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-more-vertical"
+                >
+                  <circle cx="12" cy="12" r="1" />
+                  <circle cx="12" cy="5" r="1" />
+                  <circle cx="12" cy="19" r="1" />
+                </svg>
+              </button>
+              <div class="product-cell image">
+                <img
+                  src=" {{ result.image.url }} "
+                  alt="product"
+                />
+                <span>{{ result.title }}</span>
+              </div>
+              <div class="product-cell category">
+                <span class="cell-label">Category:</span>{{ result.category.name }}
+              </div>
+      
+              <div class="product-cell stock">
+                <span class="cell-label">Stock:</span>{{ result.stock }}
+              </div>
+      
+              <div class="product-cell price">
+                <span class="cell-label">Price:</span>$ {{ result.price }}
+              </div>
+      
+              <div class="product-cell update-cell">
+                <span class="cell-label">Update</span>
+                <!-- <span class="update active"
+                  ><i class="fa-solid fa-pen-to-square"></i
+                ></span> -->
+                <a href="#" class="update active"
+                  ><i class="fa-solid fa-pen-to-square"></i
+                ></a>
+              </div>
+              <div class="product-cell">
+                <span class="cell-label">Delete:</span>
+                <!-- <span class="delete"><i class="fa-solid fa-trash"></i></span> -->
+                <a href="#" class="delete"><i class="fa-solid fa-trash"></i></a>
+              </div>
+            </div>
           </div>
-          <div class="">
-            <span class="">{{ result.category }}</span>
-          </div>
-  
-          <div class=" ">
-            <span class="">{{ result.stock }}</span>
-          </div>
-  
-          <div class=" ">
-            <span class="">${{ result.price }}</span>
-          </div>
-          {% endfor %}
-          <!-- search sections end -->
-          <div class="product-cell update-cell">
-            <span class="cell-label">Update</span>
-            <!-- <span class="update active"
-              ><i class="fa-solid fa-pen-to-square"></i
-            ></span> -->
-            <a href="#" class="update active"
-              ><i class="fa-solid fa-pen-to-square"></i
-            ></a>
-          </div>
-          <div class="product-cell">
-            <span class="cell-label">Delete:</span>
-            <!-- <span class="delete"><i class="fa-solid fa-trash"></i></span> -->
-            <a href="#" class="delete"><i class="fa-solid fa-trash"></i></a>
-          </div>
+        {% endfor %}
+      {% else %}
+        <div class="product-wrapper">
+          No product found..
         </div>
-      </div>
+      {% endif %}
+
+      
+      
+
+      
+
+
       
       
 
@@ -342,5 +379,7 @@
   </div>
 </div>
 {% endblock %}
+
+<!-- <script src="{% static 'js/main.js' %}"></script>  -->
 
 

@@ -1,10 +1,4 @@
-//  Message section
-const message = document.querySelector('.message');
-if (message) {
-   setTimeout(() => {
-     message.classList.add("message-hide");
-   }, 5000);
-}
+
 
 
 //csrf token
@@ -94,7 +88,7 @@ function buildProduct(){
         <a href="/delete-product/${product[i].id}" class="delete"><i class="fa-solid fa-trash"></i></a>
         </div>
     </div>
-        `
+        ` 
 
         productContainer.innerHTML += products
 
