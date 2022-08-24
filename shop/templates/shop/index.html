@@ -77,10 +77,11 @@
             <label>Select Category</label>
             <select>
               <option>All Categories</option>
-              <option>Furniture</option>
-              <option>Mobile</option>
-              <option>Laptop</option>
-              <option>Mouse</option>
+              {% for product in products %}
+                <option>{{ product.category.name }}</option>
+              {% endfor %}
+              
+              
             </select>
             
           </div>

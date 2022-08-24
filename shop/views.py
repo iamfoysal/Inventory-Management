@@ -12,21 +12,29 @@ from .serializers import ProductSerializer
 
 @login_required(login_url='/signin')
 def index(request):
+	
     product = Product.objects.all()
+	
     if request.method == 'POST':
         search = request.POST.get('search-product')
-        results = Product.objects.filter(Q(title__icontains=search))
+        results = Product.objects.filter(Q(title__icontains=search)|Q(price__icontains=search)|Q(category__name__icontains=search))
+		
         context =  { 
-			 'results': results,
-			 'search': search
+			'results': results,
+			'search': search
 		}
         return render(request, 'shop/search.html', context)
-    context = {'products': product }
+	
+    context = {
+		'products': product 
+	}
+	
     return render (request, "shop/index.html", context)
 
 
 @login_required(login_url='/signin')
 def add_product(request):
+	
 	if request.method == 'POST':
 		form = ProductAddForm(request.POST, request.FILES)
 		if form.is_valid():

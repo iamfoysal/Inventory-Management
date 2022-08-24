@@ -102,7 +102,7 @@
 
   <div class="app-content">
     <div class="app-content-header">
-      <h1 class="app-content-headerText">Products</h1>
+      <h1 class="app-content-headerText">Search Products</h1>
 
       <a href="{% url 'add-product'%}" class="app-content-headerButton"
         >Add Product</a
@@ -361,7 +361,7 @@
           </div>
         {% endfor %}
       {% else %}
-        <div class="product-wrapper">
+        <div class="product-wrapper" style="color:brown">
           No product found..
         </div>
       {% endif %}
