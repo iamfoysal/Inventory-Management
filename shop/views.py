@@ -1,9 +1,10 @@
-from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
 from .forms import ProductAddForm
 from .models import Category, Product
 from .serializers import ProductSerializer
@@ -35,11 +36,26 @@ def index(request):
 
 @login_required(login_url='user/signin')
 def category_product(request,pk):
+	categories = Category.objects.all()
 	category = get_object_or_404(Category,pk=pk)
 	products = category.product_set.all()
+
+
+	if request.method == 'POST':
+		search = request.POST.get('search-product')
+		results = category.product_set.all().filter(Q(title__icontains=search)|Q(price__icontains=search)|Q(category__name__icontains=search))
+
+		context = {
+			'results' : results,
+			'search' : search,
+			'categories' : categories,
+		}
+
+		return render(request, 'shop/search.html', context)
 	
 	context = {
-		'results' : products
+		'results' : products,
+		'categories' : categories,
 	}
 	return render(request, 'shop/category-product.html',context)
 
@@ -63,11 +79,22 @@ def add_product(request):
 	return render(request, 'shop/add-product.html', context)
 
 
+@login_required(login_url='user/signin')
+def detail_product(request,pk):
+	product = get_object_or_404(Product, id=pk)
+	
+	context = {
+		'product' : product,
+	}
+	return render(request, 'shop/detail-product.html',context)
+
+
+
+
 
 @login_required(login_url='user/signin')
 def edit_product(request,pk):
 	product = get_object_or_404(Product,pk=pk)
-	print("product is ======", product)
 	form = ProductAddForm(instance = product)
 	if request.method == 'POST':
 		form = ProductAddForm(request.POST, request.FILES,instance = product)

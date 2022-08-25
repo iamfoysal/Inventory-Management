@@ -72,6 +72,11 @@ function buildProduct(){
         <div class="product-cell price">
         <span class="cell-label">Price:</span>$ ${ product[i].price }
         </div>
+        
+        <div class="product-cell update-cell">
+            <span class="cell-label">Details</span>
+            <a href="/product/details/${product[i].id}/" class="update active"><i class="fa-solid fa-eye"></i></a>
+        </div>
 
         <div class="product-cell update-cell">
         <span class="cell-label">Update</span>
