@@ -10,7 +10,7 @@
         <form method="POST" class="login-form" id="product-add-form" enctype="multipart/form-data">
             {% csrf_token %}
             {% for field in form %}
-            <div class="input-group">
+            <div class="input-group product-update-form">
                 <label >{{ field.label_tag }} </label>
                         {{ field }}
             </div> 

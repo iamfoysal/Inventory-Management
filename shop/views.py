@@ -1,7 +1,7 @@
-from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib import messages
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .forms import ProductAddForm
@@ -9,27 +9,44 @@ from .models import Category, Product
 from .serializers import ProductSerializer
 
 
-@login_required(login_url='/signin')
+@login_required(login_url='user/signin')
 def index(request):
-    product = Product.objects.all()
-    if request.method == 'POST':
-        search = request.POST.get('search-product')
-        results = Product.objects.filter(Q(title__icontains=search)|Q(price__icontains=search)|Q(category__name__icontains=search))
-        context =  { 
-			'results': results,
-			'search': search
+	category = Category.objects.all()
+	product = Product.objects.all()
+
+	if request.method == 'POST':
+		search = request.POST.get('search-product')
+		results = Product.objects.filter(Q(title__icontains=search)|Q(price__icontains=search)|Q(category__name__icontains=search))
+
+		context = {
+			'results' : results,
+			'search' : search,
+			'categories' : category,
 		}
-        return render(request, 'shop/search.html', context)
-	
-    context = {
-		'products': product ,
-		
+
+		return render(request, 'shop/search.html', context)
+	context = {
+		'products' : product,
+		'categories' : category
+
 	}
+	return render(request, 'shop/index.html',context)
+
+
+@login_required(login_url='user/signin')
+def category_product(request,pk):
+	category = get_object_or_404(Category,pk=pk)
+	products = category.product_set.all()
 	
-    return render (request, "shop/index.html", context)
+	context = {
+		'results' : products
+	}
+	return render(request, 'shop/category-product.html',context)
 
 
-@login_required(login_url='/signin')
+
+
+@login_required(login_url='user/signin')
 def add_product(request):
 	
 	if request.method == 'POST':
@@ -47,7 +64,7 @@ def add_product(request):
 
 
 
-@login_required(login_url='/signin')
+@login_required(login_url='user/signin')
 def edit_product(request,pk):
 	product = get_object_or_404(Product,pk=pk)
 	print("product is ======", product)
@@ -68,7 +85,7 @@ def edit_product(request,pk):
 
 
 
-@login_required(login_url='/signin')
+@login_required(login_url='user/signin')
 def delete_product(request, pk):
     product = get_object_or_404(Product, id=pk)
     if request.method == 'POST':

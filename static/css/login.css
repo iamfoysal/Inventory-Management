@@ -121,3 +121,18 @@ body {
     margin-top: 0;
     font-size: 21px;
 }
+/* product update */
+
+.product-update-form{
+  display: table;
+  color: #fff;
+  font-size: 12px;
+}
+
+.product-update-form a{
+  color: #fff;
+  justify-content: end;
+  align-items: end;
+  justify-items: center;
+  align-content: center;
+}

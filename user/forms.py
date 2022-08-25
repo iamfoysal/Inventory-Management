@@ -17,7 +17,6 @@ class UserRegisterFrom(UserCreationForm):
         self.fields['password1'].widget = forms.PasswordInput( attrs={'placeholder': 'New password' })
         self.fields['password2'].widget = forms.PasswordInput(attrs={'placeholder': 'Repeat password'}) 
 
-
 class UserForm(ModelForm):
     class Meta:
         model = Profile
