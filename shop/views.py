@@ -4,10 +4,53 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
 from .forms import ProductAddForm
 from .models import Category, Product
 from .serializers import ProductSerializer
+
+
+
+@api_view(['GET'])
+def productlist_api(request):
+	products = Product.objects.all().order_by('-created_at')
+	# print(products)
+	product_serializer = ProductSerializer(products, many=True)
+	# print(product_serializer.data)
+	return Response(product_serializer.data)
+
+
+
+@api_view(['POST'])
+def add_product_api(request):
+	products = ProductSerializer(data=request.data)
+	if products.is_valid():
+		products.save()
+	return Response(products.data)
+
+
+@api_view(['POST'])
+def update_product_api(request, pk):
+	product = Product.objects.get(id=pk)
+	product_serializer = ProductSerializer(instance=product, data=request.data)
+	if product_serializer.is_valid():
+		product_serializer.save()
+	return Response(product_serializer.data)
+
+
+@api_view(['GET'])
+def detail_product_api(request, pk):
+	product = Product.objects.get(id=pk)
+	product_serializer = ProductSerializer(product, many=False)
+	return Response(product_serializer.data)
+
+
+
+@api_view(['DELETE'])
+def delete_product_api(request, pk):
+	product = Product.objects.get(id=pk)
+	product.delete()
+	return Response("Product deleted")
+
 
 
 @login_required(login_url='user/signin')
@@ -24,7 +67,6 @@ def index(request):
 			'search' : search,
 			'categories' : category,
 		}
-
 		return render(request, 'shop/search.html', context)
 	context = {
 		'products' : product,
@@ -91,7 +133,6 @@ def detail_product(request,pk):
 
 
 
-
 @login_required(login_url='user/signin')
 def edit_product(request,pk):
 	product = get_object_or_404(Product,pk=pk)
@@ -122,45 +163,4 @@ def delete_product(request, pk):
     context ={'product': product}
     return render (request, 'shop/delete.html', context)
 
-
-@api_view(['GET'])
-def productlist_api(request):
-	products = Product.objects.all().order_by('-created_at')
-	# print(products)
-	product_serializer = ProductSerializer(products, many=True)
-	# print(product_serializer.data)
-	return Response(product_serializer.data)
-
-
-
-@api_view(['POST'])
-def add_product_api(request):
-	products = ProductSerializer(data=request.data)
-	if products.is_valid():
-		products.save()
-	return Response(products.data)
-
-
-@api_view(['POST'])
-def update_product_api(request, pk):
-	product = Product.objects.get(id=pk)
-	product_serializer = ProductSerializer(instance=product, data=request.data)
-	if product_serializer.is_valid():
-		product_serializer.save()
-	return Response(product_serializer.data)
-
-
-@api_view(['GET'])
-def detail_product_api(request, pk):
-	product = Product.objects.get(id=pk)
-	product_serializer = ProductSerializer(product, many=False)
-	return Response(product_serializer.data)
-
-
-
-@api_view(['DELETE'])
-def delete_product_api(request, pk):
-	product = Product.objects.get(id=pk)
-	product.delete()
-	return Response("Product deleted")
 
