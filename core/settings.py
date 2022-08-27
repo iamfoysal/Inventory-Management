@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # Project Applications Installed
     'shop.apps.ShopConfig',
     'user.apps.UserConfig',
+    'multiplefile.apps.MultiplefileConfig',
     'rest_framework',
 ]
 
